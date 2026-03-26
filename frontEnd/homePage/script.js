@@ -13,7 +13,7 @@ const descMaq = document.querySelector("#descMaq");
 const mecanicoMaq = document.querySelector("#mecanicoMaq");
 const dataMaq = document.querySelector("#dataMaq");
 const status = document.querySelector("#statusMaq");
-const logout = document.querySelector("#user");
+const logout = document.querySelector("#logout");
 const user = localStorage.getItem("id");
 const Api = "http://192.168.1.5:3000"
 
@@ -145,4 +145,9 @@ async function criarOrdem() {
 buttonS.addEventListener("click", () => {
   criarOrdem();
   window.location.reload();
+});
+
+logout.addEventListener('click', ()=>{
+  localStorage.clear();
+  window.location.replace('../loginSignup/index.html');
 });

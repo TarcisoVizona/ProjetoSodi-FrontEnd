@@ -8,6 +8,8 @@ const botaoFecharmaqui = document.querySelector("#fechar_modalMaqui");
 const cad_maquina = document.querySelector("#cadastro_maquina");
 const ul_lateral = document.querySelectorAll("#barralateral li");
 const status_triplo = document.querySelector("#divstatus");
+const logout = document.querySelector('#logout')
+const user = localStorage.getItem('id');
 const Api = "http://192.168.1.5:3000"
 
 //Modal cadastro maquina
@@ -86,8 +88,10 @@ ul_lateral[2].addEventListener("click", async () => {
     <p>${element.marca_maquina}</p>
     <p>${element.ano_maquina}</p>
     <p>${element.id_cliente}</p>
+      <div id="botao">
     <button onclick='editar_maquina(${element.id_maquinas})'>✏️</button>
     <button onclick='deletar_maquina(${element.id_maquinas})'>🗑️</button>
+    </div>   
     `;
     vaziaordem.appendChild(div);
   });
@@ -108,7 +112,7 @@ ul_lateral[3].addEventListener("click", async () => {
     div.innerHTML = `
     <h1>${element.id_usuario}</h1>
     <p>${element.email_usuario}</p>
-    <p>${element.senha_usuario}</p>
+
     <button onclick='deletar_funci(${element.id_usuario})'>🗑️</button>
     `;
     vaziaordem.appendChild(div);
@@ -164,7 +168,7 @@ cad_maquina.addEventListener("click", async () => {
     alert("Digite um número!");
     return;
   }
-  if (ano_maquina < 2025) {
+  if (ano_maquina > 2025 || ano_maquina<2000 ) {
     alert("Digite um número de ano válido!");
     return;
   }
@@ -189,7 +193,7 @@ async function deletar_funci(id) {
     method: "DELETE",
   });
   if (resposta.status == "200") {
-    alert("Produto excluido com sucesso");
+    alert("Usuário excluido com sucesso");
     return window.location.reload();
   }
   return alert("Sem sucesso");
@@ -216,6 +220,14 @@ async function editar_maquina(id) {
     alert("Todos os campos são obrigatórios!");
     return;
   }
+  if (isNaN(ano_maquina)) {
+    alert("Digite um número!");
+    return;
+  }
+  if (ano_maquina < 2000 || ano_maquina > 2026) {
+    alert("Digite um ano válido!");
+    return;
+  }
 const update = await fetch(`${Api}/editar_maquina/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -231,3 +243,7 @@ const update = await fetch(`${Api}/editar_maquina/${id}`, {
   }
   return alert("erro ao alterar");
 };
+logout.addEventListener('click', ()=>{
+  localStorage.clear();
+  window.location.replace('../loginSignup/index.html');
+});

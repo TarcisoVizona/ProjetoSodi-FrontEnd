@@ -120,7 +120,7 @@ bnt_cadastro.addEventListener('click', async () => {
     if (resposta.status == 200) {
         alert('Cadastro realizado com sucesso');
         window.location.reload();
-    } else if (resposta.status == 407) {
+    } else if (resposta.status == 409) {
         alert('Usuário ja cadastrado');
     }
     else {
