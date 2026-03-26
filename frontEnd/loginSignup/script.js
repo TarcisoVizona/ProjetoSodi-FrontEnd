@@ -6,6 +6,8 @@ const btn_enviar = document.querySelector('#enviar');
 const senha = document.querySelector('#senha');
 const icone2 = document.querySelector('.icone2');
 const bnt_cadastro = document.querySelector('#btn_cadastro');
+const Api = "http://192.168.1.5:3000"
+
 
 // inputs[2].style.display = 'none';
 // icone2.style.display = 'none';
@@ -50,7 +52,7 @@ btn_enviar.addEventListener('click', async () => {
         alert('A senha_usuario deve conter no mínimo 8 caracteres');
         return;
     }
-    const resposta = await fetch(`http://localhost:3000/loginUsuario`, {
+    const resposta = await fetch(`${Api}/loginUsuario`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
@@ -107,7 +109,7 @@ bnt_cadastro.addEventListener('click', async () => {
         alert('As senhas não coincidem');
         return;
     }
-    const resposta = await fetch(`http://localhost:3000/cadastroUser`, {
+    const resposta = await fetch(`${Api}/cadastroUser`, {
         method: 'POST',
         headers: { 'Content-Type': 'Application/json' },
         body: JSON.stringify({

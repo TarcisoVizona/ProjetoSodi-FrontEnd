@@ -8,6 +8,7 @@ const botaoFecharmaqui = document.querySelector("#fechar_modalMaqui");
 const cad_maquina = document.querySelector("#cadastro_maquina");
 const ul_lateral = document.querySelectorAll("#barralateral li");
 const status_triplo = document.querySelector("#divstatus");
+const Api = "http://192.168.1.5:3000"
 
 //Modal cadastro maquina
 botaoAbrirMaqui.addEventListener("click", function () {
@@ -21,7 +22,7 @@ botaoFecharmaqui.addEventListener("click", function () {
 //Metodo GET para mostrar as ordens abertas
 status_aberta.addEventListener("click", async () => {
   vaziaordem.innerHTML = "";
-  const resposta = await fetch("http://localhost:3000/statusAberta");
+  const resposta = await fetch(`${Api}/statusAberta`);
   const listagem = await resposta.json();
   listagem.forEach((element) => {
     const div = document.createElement("div_ordem");
@@ -39,7 +40,7 @@ status_aberta.addEventListener("click", async () => {
 //Metodo GET para mostrar as ordens em manutenção
 status_manutecao.addEventListener("click", async () => {
   vaziaordem.innerHTML = "";
-  const resposta = await fetch("http://localhost:3000/statusManutencao");
+  const resposta = await fetch(`${Api}/statusManutencao`);
   const listagem = await resposta.json();
   listagem.forEach((element) => {
     const div = document.createElement("div_ordem");
@@ -57,7 +58,7 @@ status_manutecao.addEventListener("click", async () => {
 //Metodo GET para mostrar as ordens concluidas
 status_concluido.addEventListener("click", async () => {
   vaziaordem.innerHTML = "";
-  const resposta = await fetch("http://localhost:3000/statusConcluida");
+  const resposta = await fetch(`${Api}/statusConcluida`);
   const listagem = await resposta.json();
   listagem.forEach((element) => {
     const div = document.createElement("div_ordem");
@@ -75,7 +76,7 @@ status_concluido.addEventListener("click", async () => {
 ul_lateral[2].addEventListener("click", async () => {
   status_triplo.style.display = "none";
   vaziaordem.innerHTML = "";
-  const resposta = await fetch("http://localhost:3000/maquinas");
+  const resposta = await fetch(`${Api}/maquinas`);
   const listagem = await resposta.json();
   listagem.forEach((element) => {
     const div = document.createElement("div_ordem");
@@ -100,7 +101,7 @@ ul_lateral[0].addEventListener("click", () => {
 ul_lateral[3].addEventListener("click", async () => {
   status_triplo.style.display = "none";
   vaziaordem.innerHTML = "";
-  const resposta = await fetch("http://localhost:3000/usuarios");
+  const resposta = await fetch(`${Api}/usuarios`);
   const listagem = await resposta.json();
   listagem.forEach((element) => {
     const div = document.createElement("div_ordem");
@@ -117,7 +118,7 @@ ul_lateral[3].addEventListener("click", async () => {
 ul_lateral[1].addEventListener("click", async () => {
   status_triplo.style.display = "none";
   vaziaordem.innerHTML = "";
-  const resposta = await fetch("http://localhost:3000/OS");
+  const resposta = await fetch(`${Api}/OS`);
   const listagem = await resposta.json();
   listagem.forEach((element) => {
     const div = document.createElement("div_ordem");
@@ -135,7 +136,7 @@ ul_lateral[1].addEventListener("click", async () => {
 ul_lateral[4].addEventListener("click", async () => {
   status_triplo.style.display = "none";
   vaziaordem.innerHTML = "";
-  const resposta = await fetch("http://localhost:3000/historico");
+  const resposta = await fetch(`${Api}/historico`);
   const listagem = await resposta.json();
   listagem.forEach((element) => {
     const div = document.createElement("div_ordem");
@@ -167,7 +168,7 @@ cad_maquina.addEventListener("click", async () => {
     alert("Digite um número de ano válido!");
     return;
   }
-  const resposta = await fetch("http://localhost:3000/cadastrarMaquina", {
+  const resposta = await fetch(`${Api}/cadastrarMaquina`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -184,7 +185,7 @@ cad_maquina.addEventListener("click", async () => {
 });
 //Método DELETE para excluir um usuario
 async function deletar_funci(id) {
-  const resposta = await fetch(`http://localhost:3000/deletar_usuario/${id}`, {
+  const resposta = await fetch(`${Api}/deletar_usuario/${id}`, {
     method: "DELETE",
   });
   if (resposta.status == "200") {
@@ -195,7 +196,7 @@ async function deletar_funci(id) {
 };
 //Método DELETE para excluir uma maquina
 async function deletar_maquina(id) {
-  const resposta = await fetch(`http://localhost:3000/deletar_maquina/${id}`, {
+  const resposta = await fetch(`${Api}/deletar_maquina/${id}`, {
     method: "DELETE",
   });
   if (resposta.status == "200") {
@@ -206,7 +207,7 @@ async function deletar_maquina(id) {
 }
 //Método PUT para atualizar a maquina
 async function editar_maquina(id) {
-  const resposta = await fetch(`http://localhost:3000/maquina/${id}`);
+  const resposta = await fetch(`${Api}/maquina/${id}`);
   const objeto = await resposta.json();
   let modelo_maquina = prompt('Digite o novo modelo', objeto.modelo_maquina);
   let marca_maquina = prompt('Digite a nova marca', objeto.marca_maquina);
@@ -215,7 +216,7 @@ async function editar_maquina(id) {
     alert("Todos os campos são obrigatórios!");
     return;
   }
-const update = await fetch(`http://localhost:3000/editar_maquina/${id}`, {
+const update = await fetch(`${Api}/editar_maquina/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

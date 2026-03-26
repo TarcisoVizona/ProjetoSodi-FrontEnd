@@ -15,6 +15,8 @@ const dataMaq = document.querySelector("#dataMaq");
 const status = document.querySelector("#statusMaq");
 const logout = document.querySelector("#user");
 const user = localStorage.getItem("id");
+const Api = "http://192.168.1.5:3000"
+
 console.log(user);
 
 //habilitar formulário OS
@@ -40,9 +42,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   if (user == null) {
     return window.location.replace("../loginSignup/index.html");
   }
-  const resposta = await fetch("http://localhost:3000/OS");
+  const resposta = await fetch(`${Api}/OS`);
   const ordens = await resposta.json();
-  const resposta1 = await fetch("http://localhost:3000/maquinas");
+  const resposta1 = await fetch(`${Api}/maquinas`);
   const maquina = await resposta1.json();
 
   ordens.forEach((ordem) => {
@@ -121,7 +123,7 @@ async function criarOrdem() {
     id_maquinas,
   );
 
-  const resposta = await fetch("http://localhost:3000/cadastrarOS", {
+  const resposta = await fetch(`${Api}/cadastrarOS`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
